@@ -42,6 +42,11 @@ def rule_score(lead):
     status = (lead["status"] or "").lower()
     permit_type = (lead["permit_type"] or "").lower()
 
+    # PLANNING brewery = hottest leads (pre-opening, needs everything)
+    if status == "planning":
+        score += 50
+        reasons.append("Brewery in planning (pre-opening)")
+
     # NEW permit = high priority
     if status == "new":
         score += 40
@@ -75,6 +80,10 @@ def rule_score(lead):
         score -= 5  # Wholesaler permit alone is less interesting
     if "wine producer" in permit_type:
         score += 3  # Often means alternating premises brewery
+    if "brewpub" in permit_type or "micro" in permit_type:
+        score += 5  # Direct brewery type = needs tap handles
+    if "nano" in permit_type:
+        score += 3  # Small but passionate
 
     # Clamp
     score = max(0, min(100, score))
