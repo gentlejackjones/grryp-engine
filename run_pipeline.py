@@ -24,8 +24,14 @@ from db import init_db
 
 
 def run_scrape():
-    from scrapers.ttb_scraper import run as scrape
-    return scrape()
+    from scrapers.ttb_scraper import run as ttb_scrape
+    from scrapers.openbrewerydb_scraper import run as obdb_scrape
+    from scrapers.news_scraper import run as news_scrape
+    total = 0
+    total += ttb_scrape()
+    total += obdb_scrape()
+    total += news_scrape()
+    return total
 
 
 def run_score():
