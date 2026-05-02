@@ -11,14 +11,10 @@ DB_PATH = DATA_DIR / "leads.db"
 # Ensure directories exist
 DATA_DIR.mkdir(exist_ok=True)
 
-# TTB Data Sources
+# TTB Data Sources (files live under a dated path like /system/files/2025-04/)
 TTB_BASE = "https://www.ttb.gov"
-TTB_ALL_PERMITS_JSON = f"{TTB_BASE}/system/files/frl/FRL_All_Permits.json"
-TTB_NEW_PERMITS_CSV = f"{TTB_BASE}/system/files/frl/FRL_Basic_Permits_Issued_Since_the_Last_Publication.csv"
-
-# Fallback dated paths (TTB sometimes uses dated directories)
-TTB_ALL_PERMITS_JSON_DATED = f"{TTB_BASE}/system/files/{{date}}/FRL_All_Permits.json"
-TTB_NEW_PERMITS_CSV_DATED = f"{TTB_BASE}/system/files/{{date}}/FRL_Basic_Permits_Issued_Since_the_Last_Publication.csv"
+TTB_ALL_PERMITS_JSON = f"{TTB_BASE}/system/files/2025-04/FRL_All_Permits.json"
+TTB_NEW_PERMITS_CSV = f"{TTB_BASE}/system/files/2025-04/FRL_Basic_Permits_Issued_Since_the_Last_Publication.csv"
 
 # Ollama (local LLM)
 OLLAMA_HOST = os.environ.get("OLLAMA_HOST", "http://localhost:11434")

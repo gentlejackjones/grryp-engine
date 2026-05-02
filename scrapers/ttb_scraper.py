@@ -16,7 +16,6 @@ from datetime import datetime, date
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from config import (
     TTB_ALL_PERMITS_JSON, TTB_NEW_PERMITS_CSV,
-    TTB_ALL_PERMITS_JSON_DATED, TTB_NEW_PERMITS_CSV_DATED,
     DATA_DIR
 )
 from db import get_conn, init_db, upsert_lead
@@ -48,23 +47,8 @@ def try_download(urls, description):
 
 
 def get_ttb_urls():
-    """Generate URL candidates with dated paths."""
-    now = date.today()
-    # Try current month and previous month
-    dates = [
-        now.strftime("%Y-%m"),
-        date(now.year, now.month - 1 if now.month > 1 else 12,
-             1).strftime("%Y-%m") if now.month > 1
-        else date(now.year - 1, 12, 1).strftime("%Y-%m")
-    ]
-
-    json_urls = [TTB_ALL_PERMITS_JSON]
-    csv_urls = [TTB_NEW_PERMITS_CSV]
-    for d in dates:
-        json_urls.append(TTB_ALL_PERMITS_JSON_DATED.format(date=d))
-        csv_urls.append(TTB_NEW_PERMITS_CSV_DATED.format(date=d))
-
-    return json_urls, csv_urls
+    """Return URL lists for CSV and JSON downloads."""
+    return [TTB_ALL_PERMITS_JSON], [TTB_NEW_PERMITS_CSV]
 
 
 def is_brewery_permit(record):
